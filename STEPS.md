@@ -15,13 +15,17 @@ So, if business logic changes, it's easy to change it in one place.
 3. Also, I document my each step as it's important to understand what I'm doing.
 And then I can easily explain it to others.
 
+Architecture might be built so differently,
+but it depends on the requirements of the real project.
 
 The list of the libraries I used:
 - NX (React, Webpack, Jest, Vitest)
-- PrimeReact
+- Styled component
+- React table (Had to reject using prime react as it led to a lot of issues)
+- Zustand
 
 Would be nice to have in the future (if it's a real project):
-- State management (Redux, MobX, etc.)
+- State management (Redux, Zustand, etc.)
 - System design, setup backend (handlers, middlewares, loggers)
 - Localization
 - Cypress

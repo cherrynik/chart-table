@@ -21,11 +21,11 @@ but it depends on the requirements of the real project.
 The list of the libraries I used:
 - NX (React, Webpack, Jest, Vitest)
 - Styled component
+- D3 (Had to reject using chart.js as it led to a lot of issues)
 - React table (Had to reject using prime react as it led to a lot of issues)
 - Zustand
 
 Would be nice to have in the future (if it's a real project):
-- State management (Redux, Zustand, etc.)
 - System design, setup backend (handlers, middlewares, loggers)
 - Localization
 - Cypress
@@ -34,3 +34,4 @@ Would be nice to have in the future (if it's a real project):
 - Eslint
 - Docker
 - CI/CD
+- Responsive design

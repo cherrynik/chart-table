@@ -1,25 +1,28 @@
-import {
-    ICompanyPerformance,
-    getROIFormatted,
-    performanceOfCompanies,
-} from '@project/data';
-import { useMemo } from 'react';
+import { getROIFormatted, performanceOfCompanies } from '@project/data';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import { GlobalStyle } from '../styles/global';
-import Table, { BarChart } from './table';
+import { BarChart, MetricViewModeTabs } from './blocks';
+import { Layout } from './blocks/Layout';
+import { usePerformanceOfCompaniesStore } from './store';
+import Table from './table';
 
 const StyledApp = styled.div``;
 
-export interface ICompanyPerformanceROI extends ICompanyPerformance {
-  ROI: string;
-  industryROI: string;
-}
-
 export function App() {
-  // In a real app, this would be fetched from an API
-  const performanceOfCompaniesResult: ICompanyPerformanceROI[] = useMemo(
-    () =>
-      [...performanceOfCompanies].map((company) => {
+  const { data, setData } = usePerformanceOfCompaniesStore((state) => ({
+    data: state.data,
+    setData: state.setData,
+    setFilteredData: state.setFilteredData,
+  }));
+
+  useEffect(() => {
+    const fetchPerformanceOfCompanies = async () => {
+      // In a real app, this would be fetched from an API
+      // const response = await fetch('/api/performance/companies');
+      // const performanceOfCompanies = await response.json();
+
+      const response = [...performanceOfCompanies].map((company) => {
         const { cost, revenue } = company;
 
         const ROI = getROIFormatted({ cost, revenue });
@@ -30,16 +33,27 @@ export function App() {
           ROI,
           industryROI,
         };
-      }),
-    []
-  );
+      });
+
+      setData?.(response);
+    };
+
+    fetchPerformanceOfCompanies();
+
+    return () => {
+      setData([]);
+    };
+  }, [setData]);
 
   return (
     <StyledApp>
       <GlobalStyle />
 
-      <BarChart />
-      <Table data={performanceOfCompaniesResult} />
+      <Layout title="Data Reports">
+        <MetricViewModeTabs />
+        <BarChart />
+        <Table data={data} />
+      </Layout>
     </StyledApp>
   );
 }

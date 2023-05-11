@@ -1,83 +1,6 @@
-import { Chart } from 'primereact/chart';
-import { DataTable } from 'primereact/datatable';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useFilters, useGlobalFilter, useSortBy, useTable } from 'react-table';
-import styled from 'styled-components';
-import { ICompanyPerformanceROI } from './app';
-
-const StyledDataTable = styled(DataTable)`
-  // Your style here
-
-  th,
-  td {
-    text-align: center !important;
-  }
-
-  th:nth-child(-n + 2),
-  td:nth-child(-n + 2) {
-    background-color: #dddddd !important;
-  }
-
-  [role='columnheader'] {
-    & {
-      // :first-of-type {
-      min-width: 250px;
-    }
-  }
-
-  .p-column-filter {
-    width: 100%;
-
-    button {
-      // display: none;
-    }
-  }
-`;
-
-export const BarChart = ({ value }: { value?: string }) => {
-  const data = {
-    labels: Array.from({ length: 5 }, (_, i) => `202${i}`),
-  };
-
-  const options = {
-    maintainAspectRatio: false,
-    aspectRatio: 1,
-    labels: ['Installs', 'Revenue', 'Cost'],
-    plugins: {
-      legend: {
-        labels: {
-          fontColor: '#495057',
-        },
-      },
-    },
-    scales: {
-      x: {
-        ticks: {
-          // secondaryTextColor
-          color: '#6c757d',
-          font: {
-            weight: 500,
-          },
-        },
-        grid: {
-          display: false,
-          drawBorder: false,
-        },
-      },
-      y: {
-        ticks: {
-          color: '#6c757d',
-        },
-        grid: {
-          color: '#e9ecef',
-          drawBorder: false,
-        },
-      },
-    },
-  };
-
-  return <Chart type="bar" data={data} options={options} />;
-};
+import { ICompanyPerformanceROI, usePerformanceOfCompaniesStore } from './store';
 
 function DefaultColumnFilter({
   column: { filterValue, preFilteredRows, setFilter },
@@ -105,6 +28,10 @@ export const Table = ({ data }: { data?: ICompanyPerformanceROI[] }) => {
     []
   );
 
+  const { setFilteredData } = usePerformanceOfCompaniesStore((state) => ({
+    setFilteredData: state.setFilteredData,
+  }));
+
   const columns = useMemo(
     () => [
       {
@@ -121,17 +48,29 @@ export const Table = ({ data }: { data?: ICompanyPerformanceROI[] }) => {
     []
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable(
-      {
-        columns,
-        data: data ?? [],
-        defaultColumn,
-      },
-      useFilters,
-      useGlobalFilter,
-      useSortBy
-    );
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    rows,
+    filteredRows,
+  } = useTable(
+    {
+      columns,
+      data: data ?? [],
+      defaultColumn,
+    },
+    useFilters,
+    useGlobalFilter,
+    useSortBy
+  );
+
+  useEffect(() => {
+    const firstFive = rows.flatMap((row) => row.original).slice(0, 5);
+
+    setFilteredData?.(firstFive);
+  }, [rows, setFilteredData]);
 
   return (
     <table {...getTableProps()}>

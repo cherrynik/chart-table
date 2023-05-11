@@ -1,5 +1,10 @@
 export const data = () => 'data';
 
+export enum MetricViewMode {
+  Installs = 'Installs',
+  ROI = 'ROI',
+}
+
 export const calculateROI = ({
   revenue,
   cost,

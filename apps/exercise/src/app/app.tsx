@@ -1,15 +1,18 @@
+import { performanceOfCompanies, performanceOfCountries } from '@project/data';
+import { useMemo } from 'react';
 import styled from 'styled-components';
-
-import NxWelcome from './nx-welcome';
+import Table from './table';
 
 const StyledApp = styled.div`
   // Your style here
 `;
 
 export function App() {
+  const companiesData = useMemo(() => performanceOfCompanies, []); // In a real app, this would be fetched from an API
+
   return (
     <StyledApp>
-      <NxWelcome title="exercise" />
+      <Table value={companiesData} />
     </StyledApp>
   );
 }

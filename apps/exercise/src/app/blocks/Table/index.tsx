@@ -5,7 +5,7 @@ import {
   useFilters,
   useGlobalFilter,
   useSortBy,
-  useTable
+  useTable,
 } from 'react-table';
 import styled from 'styled-components';
 import { ReactComponent as ArrowDownIcon } from '../../../assets/icons/arrow_down.svg';
@@ -182,40 +182,39 @@ export const Table = ({ data }: { data?: ICompanyPerformanceROI[] }) => {
   return (
     <StyledTable {...getTableProps()}>
       <div className="table-header">
-        {headerGroups.map((headerGroup) => (
-          <div className="header-row">
-            {headerGroup.headers.map(
-              (column) => (
-                <div className="col-header">
-                  <div className="name" {...column.getSortByToggleProps()}>
-                    {column.render('Header')}
-                    {column.isSorted ? (
-                      column.isSortedDesc ? (
-                        <StyledArrowDownIcon />
-                      ) : (
-                        <StyledArrowDownIcon
-                          style={{ transform: 'rotate(180deg)' }}
-                        />
-                      )
+        {headerGroups.map((headerGroup, i) => (
+          <div className="header-row" key={i}>
+            {headerGroup.headers.map((column) => (
+              <div className="col-header" key={column.id}>
+                <div className="name" {...column.getSortByToggleProps()}>
+                  {column.render('Header')}
+                  {column.isSorted ? (
+                    column.isSortedDesc ? (
+                      <StyledArrowDownIcon />
                     ) : (
-                      ''
-                    )}
-                  </div>
-                  <div className="filter">{column.render('Filter')}</div>
+                      <StyledArrowDownIcon
+                        style={{ transform: 'rotate(180deg)' }}
+                      />
+                    )
+                  ) : (
+                    ''
+                  )}
                 </div>
-              )
-            )}
+                <div className="filter">{column.render('Filter')}</div>
+              </div>
+            ))}
           </div>
         ))}
       </div>
       <div className="body">
         {rows.map((row, i) => {
           prepareRow(row);
+
           return (
-            <div className="row">
-              {row.cells.map((cell) => {
-                return <div className="cell">{cell.render('Cell')}</div>;
-              })}
+            <div className="row" key={`${row.original.company}-${row.original.country}`}>
+              {row.cells.map((cell, i) => (
+                <div className="cell" key={i}>{cell.render('Cell')}</div>
+              ))}
             </div>
           );
         })}

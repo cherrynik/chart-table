@@ -10,6 +10,7 @@ import {
 
 const StyledBarChart = styled.svg`
   background-color: #ffffff;
+  margin-bottom: 2rem;
 
   .domain {
     stroke: none;

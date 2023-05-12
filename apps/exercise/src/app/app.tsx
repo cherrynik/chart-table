@@ -2,10 +2,9 @@ import { getROIFormatted, performanceOfCompanies } from '@project/data';
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import { GlobalStyle } from '../styles/global';
-import { BarChart, MetricViewModeTabs } from './blocks';
+import { BarChart, MetricViewModeTabs, Table } from './blocks';
 import { Layout } from './blocks/Layout';
 import { usePerformanceOfCompaniesStore } from './store';
-import Table from './table';
 
 const StyledApp = styled.div``;
 

@@ -2,6 +2,9 @@
   "name": "project",
   "version": "0.0.0",
   "license": "MIT",
+  "repository": {
+    "url": "git+https://github.com/cherrynik/chart-table.git"
+  },
   "homepage": "https://cherrynik.github.io/chart-table/",
   "scripts": {
     "start": "nx serve exercise",

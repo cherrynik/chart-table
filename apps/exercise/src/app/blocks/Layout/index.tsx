@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-// TODO: move to theme
-// blue gradient to light blue in right
 const headerBackgroundColor =
   'linear-gradient(90deg, #0A7DC3 0%, #56CCF2 100%)';
 const headerTextColor = '#fff';

@@ -36,8 +36,7 @@ const StyledBarChart = styled.svg`
   }
 `;
 
-// TODO: Vertical lines for ticks
-// TODO: Too big of a gap between top of bar and top of chart
+// TODO: Too big of a gap between top of bar and top of chart (as for stats)
 export const BarChart = () => {
   const { filteredData } = usePerformanceOfCompaniesStore((state) => ({
     filteredData: state.filteredData,

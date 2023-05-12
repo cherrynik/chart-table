@@ -27,6 +27,7 @@ The list of the libraries I used:
 
 Would be nice to have in the future (if it's a real project):
 - System design, setup backend (handlers, middlewares, loggers)
+- Design system
 - Localization
 - Cypress
 - Husky

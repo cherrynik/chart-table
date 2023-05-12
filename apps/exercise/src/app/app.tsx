@@ -8,7 +8,6 @@ import { usePerformanceOfCompaniesStore } from './store';
 
 const StyledApp = styled.div``;
 
-// TODO: Fix type errors
 export function App() {
   const { data, setData } = usePerformanceOfCompaniesStore((state) => ({
     data: state.data,

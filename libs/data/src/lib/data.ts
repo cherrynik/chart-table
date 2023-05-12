@@ -11,7 +11,7 @@ export const calculateROI = ({
 }: {
   revenue: number;
   cost: number;
-}) => (revenue / cost) * 100;
+}) => revenue / cost;
 
 export const getROIFormatted = ({
   revenue,

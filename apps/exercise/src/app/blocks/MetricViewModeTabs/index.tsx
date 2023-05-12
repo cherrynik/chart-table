@@ -23,9 +23,11 @@ const StyledTabs = styled.ul`
     padding: 0;
     padding-bottom: .2rem;
     transition: all .2s ease-in-out;
+    font-family: inherit;
 
     &.active {
       border-bottom: 2px solid ${activeBorderColor};
+      font-weight: 500;
     }
 
     &:not(.active) {

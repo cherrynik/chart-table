@@ -5,7 +5,7 @@ import {
   useFilters,
   useGlobalFilter,
   useSortBy,
-  useTable,
+  useTable
 } from 'react-table';
 import styled from 'styled-components';
 import { ReactComponent as ArrowDownIcon } from '../../../assets/icons/arrow_down.svg';
@@ -112,17 +112,20 @@ const StyledTable = styled.div`
 const StyledArrowDownIcon = styled(ArrowDownIcon)`
   width: 1rem;
   height: 1rem;
-  margin-left: .25rem;
+  margin-left: 0.25rem;
   margin-right: calc(-0.25rem - 1rem);
   stroke-width: 3px;
   color: #2f80ec;
 `;
 
 const DefaultColumnFilter = ({
-  column: { filterValue, preFilteredRows, setFilter },
+  column: { filterValue, setFilter },
+}: {
+  column: {
+    filterValue: string;
+    setFilter: (value: string | undefined) => void;
+  };
 }) => {
-  const count = preFilteredRows.length;
-
   return (
     <input
       value={filterValue || ''}
@@ -141,7 +144,7 @@ export const Table = ({ data }: { data?: ICompanyPerformanceROI[] }) => {
       Filter: DefaultColumnFilter,
     }),
     []
-  );
+  ) as Partial<Column<ICompanyPerformanceROI>>;
 
   const { setFilteredData } = usePerformanceOfCompaniesStore((state) => ({
     setFilteredData: state.setFilteredData,
@@ -158,18 +161,17 @@ export const Table = ({ data }: { data?: ICompanyPerformanceROI[] }) => {
     []
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } =
-    useTable(
-      {
-        columns,
-        data: data ?? [],
-        defaultColumn,
-      },
-      useFilters,
-      useGlobalFilter,
-      useBlockLayout,
-      useSortBy
-    );
+  const { getTableProps, headerGroups, prepareRow, rows } = useTable(
+    {
+      columns,
+      data: data ?? [],
+      defaultColumn,
+    },
+    useFilters,
+    useGlobalFilter,
+    useBlockLayout,
+    useSortBy
+  );
 
   useEffect(() => {
     const firstFive = rows.flatMap((row) => row.original).slice(0, 5);
@@ -182,19 +184,27 @@ export const Table = ({ data }: { data?: ICompanyPerformanceROI[] }) => {
       <div className="table-header">
         {headerGroups.map((headerGroup) => (
           <div className="header-row">
-            {headerGroup.headers.map((column) => (
-              <div className="col-header">
-                <div className="name" {...column.getSortByToggleProps()}>
+            {headerGroup.headers.map(
+              (column) => (
+                <div className="col-header">
+                  <div className="name" {...column.getSortByToggleProps()}>
                     {column.render('Header')}
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? <StyledArrowDownIcon />
-                        : <StyledArrowDownIcon style={{ transform: 'rotate(180deg)' }} />
-                      : ''}
+                    {column.isSorted ? (
+                      column.isSortedDesc ? (
+                        <StyledArrowDownIcon />
+                      ) : (
+                        <StyledArrowDownIcon
+                          style={{ transform: 'rotate(180deg)' }}
+                        />
+                      )
+                    ) : (
+                      ''
+                    )}
+                  </div>
+                  <div className="filter">{column.render('Filter')}</div>
                 </div>
-                <div className="filter">{column.render('Filter')}</div>
-              </div>
-            ))}
+              )
+            )}
           </div>
         ))}
       </div>

@@ -12,7 +12,6 @@
         "compiler": "babel",
         "outputPath": "dist/apps/exercise",
         "index": "apps/exercise/src/index.html",
-        "baseHref": "/",
         "main": "apps/exercise/src/main.tsx",
         "tsConfig": "apps/exercise/tsconfig.app.json",
         "assets": ["apps/exercise/src/favicon.ico", "apps/exercise/src/assets"],

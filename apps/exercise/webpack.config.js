@@ -5,6 +5,7 @@ const { withReact } = require('@nx/react');
 module.exports = composePlugins(withNx({
   skipTypeChecking: true,
 }), withReact({
+  // TODO: Move to env
   baseHref: process.env.NODE_ENV === 'production' ? '/chart-table/' : '/',
 }), (config) => {
   // Update the webpack config as needed here.
